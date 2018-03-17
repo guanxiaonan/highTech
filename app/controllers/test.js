@@ -20,7 +20,7 @@ export default class Test {
     }
     let result = ModelTest.save(data);
     if(result == true){
-      //console.log(ctx.session);
+      console.log(ctx.session);
       ctx.body = {data: "hello world"};
     }else{
       ctx.body = {data: "hello world"};
