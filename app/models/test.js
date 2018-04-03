@@ -77,10 +77,87 @@ static async save_diaocha(data_diaocha){
     let result_project = await knex('project_case').insert(insert_project);
     return result_project;
   }
-  //存储研发中心基本情况数据进入数据库
-  // static async save_yanji(data_yanji){
-  //
-  // }
+
+  存储研发中心基本情况数据进入数据库
+  static async save_yanji(data_yanji){
+      console.log(data_yanji);
+      let insert_yanji = {}   //研发中心总表
+      let insert_people = {}  //人员总表
+      let insert_finance = {} //财务总表
+      let insert_patent = {}  //专利总表
+      let insert_manage = {}  //管理制度总表
+      let id = await knex.column('id_yanfa_case').select().from('yanfa_case');
+      let insert_id = id.length+1;
+      // console.log(insert_id);
+      //将数据插入研发总表
+      insert_yanji.field = data_yanji['领域'];
+      insert_yanji.degree = data_yanji['程度'];
+      insert_yanji.id_yanfa_people = insert_id;
+      insert_yanji.id_yanfa_finance = insert_id;
+      insert_yanji.id_yanfa_patent = insert_id;
+      insert_yanji.id_yanfa_manage = insert_id;
+      let result_yanji = await knex('yanfa_case').insert(insert_yanji);
+      // console.log('研发',result_yanji);
+
+      //将数据插入人员总表
+      insert_people.id_yanfa_people = insert_id;
+      insert_people.doctor = data_yanji['博士'];
+      insert_people.master = data_yanji['硕士'];
+      insert_people.college_stu = data_yanji['本科'];
+      insert_people.other = data_yanji['大专及以下'];
+      let result_people = await knex('yanfa_people').insert(insert_people);
+      // console.log('人员',result_people);
+      //讲数据插入财务总表
+      insert_finance.id_yanfa_finance = insert_id;
+      insert_finance.assets = data_yanji['资产增长率'];
+      insert_finance.sales = data_yanji['销售增长率'];
+      let result_finance = await knex('yanfa_finance').insert(insert_finance);
+      // console.log('财务',result_finance);
+      //将数据插入专利总表
+      insert_patent.id_yanfa_patent = insert_id;
+      insert_patent.foreign = data_yanji['国外专利'];
+      insert_patent.domestic = data_yanji['国内发明专利'];
+      insert_patent.shiyong = data_yanji['实用新型'];
+      insert_patent.softly = data_yanji['软著'];
+      insert_patent.waiguan = data_yanji['外观设计'];
+      insert_patent.ic = data_yanji['集成电路'];
+      // console.log('集成电路',insert_patent.ic);
+      insert_patent.new_varieties = data_yanji['新品种'];
+      let result_patent = await knex('yanfa_patent').insert(insert_patent);
+      // console.log('专利',result_patent);
+      //将数据插入管理制度总表
+      insert_manage.id_yanfa_manage = insert_id;
+      insert_manage.ms_one = data_yanji['管理制度1'];
+      insert_manage.ms_two = data_yanji['管理制度2'];
+      insert_manage.ms_three = data_yanji['管理制度3'];
+      insert_manage.ms_four = data_yanji['管理制度4'];
+      let result_manage = await knex('yanfa_manage').insert(insert_manage);
+      // console.log('管理',result_manage);
+
+      if (result_yanji[0] !=0){
+          if(result_people[0] !=0){
+            if(result_finance[0] !=0){
+              if(result_patent[0] !=0){
+                if(result_manage[0] !=0){
+                    return 'success';
+
+                }else{
+                  return 'manageWrong';
+                }
+              }else{
+                return 'patentWrong';
+              }
+            }else{
+              return 'financeWrong';
+            }
+          }else{
+            return 'peopleWrong';
+          }
+      }else{
+        return 'yanjiWrong';
+      }
+      return 'wrong'
+  }
 
 
 }

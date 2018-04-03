@@ -105,7 +105,35 @@ export default class Test {
   //研发中心基本情况数据提交
   static async yanji_tijiao(ctx,next){
     let data_yanji = ctx.request.body;
-    console.log(data_yanji);
-  }
+    // console.log(data_yanji);
+    let result_yanji = await ModelTest.save_yanji(data_yanji);
+    console.log("研发数据输入数据库结果：",result_yanji);
+    switch(result_yanji)
+      {
+      case 'yanjiWrong':
+          console.log("研发总表输入错误!");
+          break;
+      case 'peopleWrong':
+          console.log("人员输入有误!");
+          break;
+      case 'financeWrong':
+          console.log("财务输入有误!");
+          break;
+      case 'patentWrong':
+          console.log("专利输入有误!");
+          break;
+      case 'manageWrong':
+          console.log("管理制度输入有误!");
+          break;
+      case 'success':
+          console.log("插入数据成功!");
+          break;
+      case 'wrong':
+          console.log("所有部分插入都有误!");
+          break;
+      default:
+          console.log("未知错误!");
+        }
+    }
 
-}
+  }
