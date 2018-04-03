@@ -71,7 +71,7 @@ static async save_diaocha(data_diaocha){
     insert_project.leiji = data_project['前三年项目累计'];
     insert_project.project_name = data_project['项目名称'];
     insert_project.money = data_project['投入资金'];
-    insert_project.time = data_project['立项时间'];
+    insert_project.lx_time = data_project['立项时间'];
     insert_project.cailiao = data_project['材料'];
     insert_project.content = data_project['内容用途领域成果'];
     let result_project = await knex('project_case').insert(insert_project);

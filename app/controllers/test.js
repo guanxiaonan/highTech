@@ -46,6 +46,7 @@ export default class Test {
       console.log(data_diaocha);
       let result = await ModelTest.save_diaocha(data_diaocha);
       console.log(result);
+      ctx.body = ["gyn:"+"系统返回数据"]   //这样可以返回数据给前端
       if(result[0] != 0){
         console.log("插入数据成功！");
       }else{
@@ -92,12 +93,12 @@ export default class Test {
   static async project_tijiao(ctx,next){
     let data_project = ctx.request.body;
     console.log(data_project);
-    // let result_project = await ModelTest.save_project(data_project);
-    // if (result_project[0]!=0){
+    let result_project = await ModelTest.save_project(data_project);
+    if (result_project[0]!=0){
       console.log("插入数据成功！");
-    // }else{
-    //   console.log("插入数据失败！");
-    // }
+    }else{
+      console.log("插入数据失败！");
+    }
 
   }
 
