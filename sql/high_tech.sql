@@ -6,4 +6,4 @@ CREATE TABLE `test_data` (
   `data` varchar(45) NOT NULL,
   `time` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
